@@ -25,7 +25,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 type ProfileForm = {
-    id?: number;
+    id?: number | null;
     title: string;
     description: string;
     send_notification: boolean;

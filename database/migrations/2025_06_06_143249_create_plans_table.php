@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string("name");
             $table->string("description")->nullable();
             $table->float("value")->default(0);
             $table->string("icon")->nullable(); // nome do ícone ou o nome do componente
             $table->string("color")->nullable(); // cor em hex, rgb ou nome da cor
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

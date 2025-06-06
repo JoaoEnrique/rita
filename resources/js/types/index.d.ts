@@ -53,3 +53,12 @@ export interface Appointment {
     date_notification: string;
     send_notification: boolean;
 }
+
+export interface Plan {
+    id: number;
+    name: string;
+    description: string;
+    value: number | string;
+    icon: string;
+    color: string;
+}

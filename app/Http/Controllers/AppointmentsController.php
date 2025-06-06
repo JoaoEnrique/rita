@@ -25,7 +25,7 @@ class AppointmentsController extends Controller
     public function edit($id){
         $appointment = Appointment::findOrFail($id);
         if ($appointment->user_id !== auth()->id()) {
-            return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+            return redirect()->route('appointments.index')->with('error', 'Acesso negado.');
         }
         return Inertia::render('appointments/register', [
             'appointment' => $appointment,
@@ -66,7 +66,7 @@ class AppointmentsController extends Controller
 
             $appointment = Appointment::findOrFail($data['id']);
             if ($appointment->user_id !== auth()->id()) {
-                return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+                return redirect()->route('appointments.index')->with('error', 'Acesso negado.');
             }
 
             
@@ -86,7 +86,7 @@ class AppointmentsController extends Controller
 
             $appointment = Appointment::findOrFail($data['id']);
             if ($appointment->user_id !== auth()->id()) {
-                return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+                return redirect()->route('appointments.index')->with('error', 'Acesso negado.');
             }
 
             $appointment->delete();

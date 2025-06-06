@@ -2,10 +2,11 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound } from 'lucide-react';
+import { SharedData, type NavItem } from '@/types';
+import { Link, usePage } from '@inertiajs/react';
+import { ScrollText,Clipboard, ShoppingCart, BookOpen, ContactRound, AmpersandIcon } from 'lucide-react';
 import AppLogo from './app-logo';
+import { isAdmin } from '@/utils/auths';
 
 const mainNavItems: NavItem[] = [
     // {
@@ -15,12 +16,12 @@ const mainNavItems: NavItem[] = [
     // },
     {
         title: 'Meus agendamentos',
-        href: '/appointments',
+        href: route('appointments.index'),
         icon: Clipboard,
     },
     {
         title: 'Agendar',
-        href: '/appointments/new',
+        href: route('appointments.register'),
         icon: ScrollText,
     },
 ];
@@ -54,6 +55,21 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const page = usePage<SharedData>();
+    const { auth } = page.props;
+
+    if (isAdmin(auth.user)) {
+        const alreadyExists = mainNavItems.some(item => item.title === 'Gerenciar planos');
+
+        if (!alreadyExists) {
+            mainNavItems.push({
+                title: 'Gerenciar planos',
+                href: '/plans/manage',
+                icon: AmpersandIcon,
+            });
+        }
+    }
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
