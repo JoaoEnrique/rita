@@ -62,3 +62,16 @@ export interface Plan {
     icon: string;
     color: string;
 }
+
+type AppointmentPagination = {
+    current_page: number;
+    data: Plan[];
+    first_page_url: string;
+    last_page_url: string;
+    links: Array<{ url: string | null, label: string, active: boolean }>;
+    next_page_url: string | null;
+    prev_page_url: string | null;
+    total: number;
+    per_page: number;
+    id: number;
+}

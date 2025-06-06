@@ -12,6 +12,14 @@ class PlansController extends Controller
     public function index(Request $request){
         $plans = Plan::paginate(10);
 
+        return Inertia::render('plans', [
+            'plans' => $plans,
+        ]);
+    }
+    
+    public function manage(Request $request){
+        $plans = Plan::paginate(10);
+
         return Inertia::render('plans/index', [
             'plans' => $plans,
         ]);

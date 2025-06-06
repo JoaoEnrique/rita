@@ -19,10 +19,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::group(['prefix' => 'plans'], function () {
-        Route::get('/', [RoutesController::class, "plans"])->name("plans.index");
+        Route::get('/', [PlansController::class, "index"])->name("plans.index");
 
         Route::group(['prefix' => 'manage'], function () {
-            Route::get('/', [PlansController::class, "index"])->name("plans.manage");
+            Route::get('/', [PlansController::class, "manage"])->name("plans.manage");
             Route::get('/register', [PlansController::class, "register"])->name('plans.register');
             Route::post('/', [PlansController::class, "save"])->name('plans.save');
             Route::get('/{id}', [PlansController::class, 'edit'])->name('plans.edit');
