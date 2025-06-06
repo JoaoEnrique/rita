@@ -3,20 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\RoutesController;
 
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('appointments.index');
-    }
-    return Inertia::render('welcome');
-})->name('home');
-
+Route::get('/', [RoutesController::class, "index"])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-    
     Route::group(['prefix' => 'appointments'], function () {
         Route::get('/', [AppointmentsController::class, "index"])->name("appointments.index");
         Route::get('/new', [AppointmentsController::class, "new"])->name('appointments.new');
