@@ -48,7 +48,7 @@ export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: 
 
             <SettingsLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Informações" description="Atualize suas informações" />
+                    <HeadingSmall title="Informações" description="Atualize suas informações do RITA, Paçoca e ReadBooks" />
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">
