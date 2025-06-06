@@ -1,4 +1,4 @@
-import { AppointmentPagination, Plan, type BreadcrumbItem } from '@/types';
+import { AppointmentPagination, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 
 import { Button } from '@/components/ui/button';
@@ -45,7 +45,7 @@ export default function Index() {
                     ) : (
                         <ul className="flex flex-wrap gap-4 items-stretch">
                             {plans.data.map((plan) => {
-                                const IconComponent = plan.icon ? (plan.icon in iconMap ? iconMap[plan.icon] : null) : null;
+                                const IconComponent = iconMap[plan.icon as IconName];
 
                                 return (
                                     <li
