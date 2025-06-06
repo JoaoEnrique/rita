@@ -44,7 +44,7 @@ export default function DeleteUser() {
                         <Button variant="destructive">Apagar Conta</Button>
                     </DialogTrigger>
                     <DialogContent>
-                        <DialogTitle>Are you sure you want to delete your account?</DialogTitle>
+                        <DialogTitle>Tem certeza que deseja apagar sua conta e todos os dados?</DialogTitle>
                         <DialogDescription>
                             Sua conta será apagada, inclusive informações sobre pagamentos. Não é possível resgatar o saldo disponível. E sua conta da rede social Paçoca também será apagada. Não é possível recuperar essa ação
                         </DialogDescription>

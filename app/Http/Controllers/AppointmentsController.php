@@ -48,8 +48,8 @@ class AppointmentsController extends Controller
             $appointment = Appointment::create($data);
 
             return redirect("/appointments/{$appointment->id}")->with('success', 'Agendamento cadastrado.');
-        } catch (\Exception $th) {
-            return redirect()->back()->with('error', 'Erro ao criar agendamento: ' . $th->getMessage());
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar agendamento: ' . $e->getMessage());
         }
     }
 
@@ -73,8 +73,27 @@ class AppointmentsController extends Controller
             $appointment->update($data);
 
             return redirect()->back()->with('success', 'Agendamento atualizado.');
-        } catch (\Exception $th) {
-            return redirect()->back()->with('error', 'Erro ao atualizar agendamento: ' . $th->getMessage());
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar agendamento: ' . $e->getMessage());
+        }
+    }
+
+    public function delete(Request $request){
+        try {
+            $data = $request->validate([
+                'id' => 'required|exists:appointments,id',
+            ]);
+
+            $appointment = Appointment::findOrFail($data['id']);
+            if ($appointment->user_id !== auth()->id()) {
+                return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+            }
+
+            $appointment->delete();
+
+            return redirect()->route('appointments.index')->with('success', 'Agendamento excluído.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir agendamento: ' . $e->getMessage());
         }
     }
 }

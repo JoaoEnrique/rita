@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import IndexLayout from '@/layouts/appointments/index';
 import { AlertNotification } from '@/components/ui/alert-notification';
+import DeleteAppointment from '@/components/delete-appointment';
+import { Pencil } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -59,8 +61,15 @@ export default function Index() {
 
                                 <div className="mt-4 flex gap-2">
                                     <Link href={`/appointments/${appointment.id}`}>
-                                        <Button variant="outline">Editar</Button>
+                                        <Button variant="outline">
+                                            <Pencil/>
+                                        </Button>
                                     </Link>
+
+                                    {/* <form onSubmit={(e) => deleteAppointment(e, appointment.id)}>
+                                        <Button variant="outline">Excluir</Button>
+                                    </form> */}
+                                    <DeleteAppointment id={appointment.id} />
                                 </div>
                                 </li>
                             ))}

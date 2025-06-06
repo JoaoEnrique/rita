@@ -15,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/{appointment}', [AppointmentsController::class, 'edit']);
         Route::post('/register', [AppointmentsController::class, "save"])->name('appointments.register');
         Route::post('/update', [AppointmentsController::class, "update"])->name('appointments.update');
+        Route::post('/delete', [AppointmentsController::class, "delete"])->name('appointments.delete');
     });
 });
 
