@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    protected $connection = 'pacoca'; // Define a conexão do sistema A
+    protected $table = 'users';         // Define a tabela de usuários do sistema A
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'user_name',
         'email',
         'password',
     ];

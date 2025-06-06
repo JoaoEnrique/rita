@@ -30,14 +30,44 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+
+        $rules = [
+                'name' => ['required', 'string', 'max:50'],
+                'user_name' => [
+                    'required',
+                    'string',
+                    'max:20',
+                    'unique:pacoca.users',
+                    'regex:/^[^@\s?#&%\/:;=\'"{}\[\]\\\\|+]+$/'
+                ],
+    
+                'email' => ['required', 'string', 'email', 'max:50', 'unique:pacoca.users'],
+                'password' => ['required', 'string', 'min:8', 'max:50', 'confirmed'],
+                'password_confirmation' => ['required', 'string', 'max:50', 'min:8'],
+        ];
+
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'user_name' => [
+        //         'required',
+        //         'string',
+        //         'max:20',
+        //         'unique:pacoca.users',
+        //         'regex:/^[^@\s?#&%\/:;=\'"{}\[\]\\\\|+]+$/'
+        //     ],
+        //     'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+        //     'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        // ]);
+
+        $messages = [
+            'user_name.regex' => 'O nome de usuário não pode conter os seguintes caracteres: ? # & % / : ; = \' " { } [ ] \\ | +',
+        ];
+            
+        $request->validate($rules, $messages);
 
         $user = User::create([
             'name' => $request->name,
+            'user_name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
