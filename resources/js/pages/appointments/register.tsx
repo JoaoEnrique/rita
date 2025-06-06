@@ -31,7 +31,7 @@ type ProfileForm = {
     date_notification: string;
 }
 
-export default function Index() {
+export default function Register() {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
         title: "",
         description: "",
@@ -54,7 +54,7 @@ export default function Index() {
 
             <RegisterLayout>
                 <div className="space-y-6">
-                    <HeadingSmall title="Novo Agendamento" description="Cadastre um novo agendamento" />
+                    {/* <HeadingSmall title="Novo Agendamento" description="Cadastre um novo agendamento" /> */}
 
                     <form onSubmit={submit} className="space-y-6">
                         <div className="grid gap-2">

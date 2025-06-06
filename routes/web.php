@@ -6,7 +6,7 @@ use App\Http\Controllers\AppointmentsController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('appointments.index');
     }
     return Inertia::render('welcome');
 })->name('home');
@@ -18,7 +18,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
     
     Route::group(['prefix' => 'appointments'], function () {
-        Route::get('/', [AppointmentsController::class, "new"])->name("appointments.index");
+        Route::get('/', [AppointmentsController::class, "index"])->name("appointments.index");
         Route::get('/new', [AppointmentsController::class, "new"])->name('appointments.new');
         Route::post('/register', [AppointmentsController::class, "register"])->name('appointments.register');
     });

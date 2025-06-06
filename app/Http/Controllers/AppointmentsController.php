@@ -8,6 +8,16 @@ use App\Models\Appointment;
 
 class AppointmentsController extends Controller
 {
+    public function index(Request $request){
+        $appointments = Appointment::where('user_id', auth()->id())
+            ->orderBy('date_appointment', 'asc')
+            ->paginate(10);
+
+        return Inertia::render('appointments/index', [
+            'appointments' => $appointments,
+        ]);
+    }
+        
     public function new(Request $request){
         return Inertia::render('appointments/register');
     }
