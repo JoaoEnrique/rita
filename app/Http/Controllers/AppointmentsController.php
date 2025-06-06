@@ -33,40 +33,48 @@ class AppointmentsController extends Controller
     }
 
     public function save(Request $request){
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'send_notification' => 'boolean',
-            'date_appointment' => 'required|date',
-            'date_notification' => 'nullable|date',
-        ]);
+        try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:1000',
+                'send_notification' => 'boolean',
+                'date_appointment' => 'required|date',
+                'date_notification' => 'nullable|date',
+            ]);
 
-        $data['user_id'] = auth()->id();
-        $data['was_sent'] = false;
+            $data['user_id'] = auth()->id();
+            $data['was_sent'] = false;
 
-        Appointment::create($data);
+            $appointment = Appointment::create($data);
 
-        return redirect()->route('appointments.index')->with('success', 'Agendamento cadastrado.');
+            return redirect("/appointments/{$appointment->id}")->with('success', 'Agendamento cadastrado.');
+        } catch (\Exception $th) {
+            return redirect()->back()->with('error', 'Erro ao criar agendamento: ' . $th->getMessage());
+        }
     }
 
     public function update(Request $request){
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
-            'send_notification' => 'boolean',
-            'date_appointment' => 'required|date',
-            'date_notification' => 'nullable|date',
-            'id' => 'required|exists:appointments,id',
-        ]);
+        try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string|max:1000',
+                'send_notification' => 'boolean',
+                'date_appointment' => 'required|date',
+                'date_notification' => 'nullable|date',
+                'id' => 'required|exists:appointments,id',
+            ]);
 
-        $appointment = Appointment::findOrFail($data['id']);
-        if ($appointment->user_id !== auth()->id()) {
-            return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+            $appointment = Appointment::findOrFail($data['id']);
+            if ($appointment->user_id !== auth()->id()) {
+                return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+            }
+
+            
+            $appointment->update($data);
+
+            return redirect()->back()->with('success', 'Agendamento atualizado.');
+        } catch (\Exception $th) {
+            return redirect()->back()->with('error', 'Erro ao atualizar agendamento: ' . $th->getMessage());
         }
-
-         
-        $appointment->update($data);
-
-        return redirect()->back()->with('success', 'Agendamento atualizado.');
     }
 }

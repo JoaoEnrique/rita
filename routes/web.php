@@ -13,7 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [AppointmentsController::class, "index"])->name("appointments.index");
         Route::get('/new', [AppointmentsController::class, "register"])->name('appointments.new');
         Route::get('/{appointment}', [AppointmentsController::class, 'edit']);
-        Route::post('/register', [AppointmentsController::class, "register"])->name('appointments.register');
+        Route::post('/register', [AppointmentsController::class, "save"])->name('appointments.register');
         Route::post('/update', [AppointmentsController::class, "update"])->name('appointments.update');
     });
 });
