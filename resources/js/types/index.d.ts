@@ -24,6 +24,7 @@ export interface NavItem {
 
 export interface SharedData {
     name: string;
+    user_name: string;
     quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };

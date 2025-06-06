@@ -18,7 +18,13 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-
+            'user_name' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique(User::class)->ignore($this->user()->id),
+                'regex:/^[^@\s?#&%\/:;=\'"{}\[\]\\\\|+]+$/'
+            ],
             'email' => [
                 'required',
                 'string',
@@ -29,4 +35,15 @@ class ProfileUpdateRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'user_name.regex' => 'O nome de usuário não pode conter os seguintes caracteres: ? # & % / : ; = \' " { } [ ] \\ | +',
+            'user_name.required' => 'O campo nome de usuário é obrigatório.',
+            'user_name.unique' => 'Este nome de usuário já está em uso.',
+            'email.unique' => 'Este email já está em uso.',
+        ];
+    }
+
 }
