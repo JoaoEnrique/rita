@@ -31,16 +31,16 @@ const footerNavItems: NavItem[] = [
         href: '/plans',
         icon: ShoppingCart,
     },
-    {
-        title: 'Contribua no Github',
-        href: 'https://github.com/JoaoEnrique/rita',
-        icon: Github,
-    },
-    {
-        title: 'Documentação',
-        href: 'https://github.com/JoaoEnrique/rita/blob/main/README.md',
-        icon: BookOpen,
-    },
+    // {
+    //     title: 'Contribua no Github',
+    //     href: 'https://github.com/JoaoEnrique/rita',
+    //     icon: Github,
+    // },
+    // {
+    //     title: 'Documentação',
+    //     href: 'https://github.com/JoaoEnrique/rita/blob/main/README.md',
+    //     icon: BookOpen,
+    // },
 ];
 
 export function AppSidebar() {
