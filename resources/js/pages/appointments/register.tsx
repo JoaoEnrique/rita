@@ -95,7 +95,7 @@ export default function Index() {
                                 checked={data.send_notification}
                                 onCheckedChange={(e) => setData("send_notification", Boolean(e))}
                             />
-                            <Label htmlFor="send_notification">Descrição para WhatsApp</Label>
+                            <Label htmlFor="send_notification">Enviar por WhatsApp</Label>
                             <InputError className="mt-2" message={errors.description} />
                         </div>
 
