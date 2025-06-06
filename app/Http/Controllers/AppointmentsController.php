@@ -18,11 +18,21 @@ class AppointmentsController extends Controller
         ]);
     }
         
-    public function new(Request $request){
+    public function register(){
         return Inertia::render('appointments/register');
     }
 
-    public function register(Request $request){
+    public function edit($id){
+        $appointment = Appointment::findOrFail($id);
+        if ($appointment->user_id !== auth()->id()) {
+            return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+        }
+        return Inertia::render('appointments/register', [
+            'appointment' => $appointment,
+        ]);
+    }
+
+    public function save(Request $request){
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
@@ -36,6 +46,27 @@ class AppointmentsController extends Controller
 
         Appointment::create($data);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment registered successfully.');
+        return redirect()->route('appointments.index')->with('success', 'Agendamento cadastrado.');
+    }
+
+    public function update(Request $request){
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'send_notification' => 'boolean',
+            'date_appointment' => 'required|date',
+            'date_notification' => 'nullable|date',
+            'id' => 'required|exists:appointments,id',
+        ]);
+
+        $appointment = Appointment::findOrFail($data['id']);
+        if ($appointment->user_id !== auth()->id()) {
+            return redirect()->route('appointments.index')->with('error', 'Unauthorized access to appointment.');
+        }
+
+         
+        $appointment->update($data);
+
+        return redirect()->back()->with('success', 'Agendamento atualizado.');
     }
 }

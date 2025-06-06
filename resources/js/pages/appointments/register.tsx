@@ -1,6 +1,6 @@
-import { type BreadcrumbItem } from '@/types';
+import { Appointment, type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import InputError from '@/components/input-error';
@@ -10,6 +10,8 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import AppLayout from '@/layouts/app-layout';
 import RegisterLayout from '@/layouts/appointments/register';
+import { AlertNotification } from '@/components/ui/alert-notification';
+// import { Dialog } from '@radix-ui/react-dialog';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +25,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 type ProfileForm = {
+    id?: number;
     title: string;
     description: string;
     send_notification: boolean;
@@ -31,16 +34,33 @@ type ProfileForm = {
 }
 
 export default function Register() {
+    const { props } = usePage();
+    const { appointment } = usePage().props as unknown as { appointment: Appointment };
+    const isEditing = Boolean(appointment);
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm<Required<ProfileForm>>({
-        title: "",
-        description: "",
-        send_notification: false,
-        date_appointment: "",
-        date_notification: "",
+        id: appointment?.id || null,
+        title: appointment?.title || '',
+        description: appointment?.description || '',
+        send_notification: appointment?.send_notification || false,
+        date_appointment: appointment?.date_appointment || '',
+        date_notification: appointment?.date_notification || '',
     });
+
+
+    if (isEditing) {
+        breadcrumbs[1].title = 'Editar';
+        breadcrumbs[1].href = `/appointments/${appointment.id}`;
+    }
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        if (isEditing) {
+            post(route('appointments.update', appointment.id), {
+                preserveScroll: true,
+            });
+            return;
+        }
 
         post(route('appointments.register'), {
             preserveScroll: true,
@@ -49,9 +69,11 @@ export default function Register() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Agendar" />
+            <Head title={isEditing ? "Editar" : "Agendar"} />
 
-            <RegisterLayout title='Agendar' description='Cadastre um novo agendamento'>
+            <AlertNotification success={props.success as string | undefined} error={props.error as string | undefined}/>
+
+            <RegisterLayout title={isEditing ? "Editar" : "Agendar"} description={isEditing ? "Edite seu agendamento" : "Cadastre um novo agendamento"}>
                 <div className="space-y-6">
                     {/* <HeadingSmall title="Novo Agendamento" description="Cadastre um novo agendamento" /> */}
 
@@ -131,7 +153,9 @@ export default function Register() {
                         ) : null}
                        
                         <div className="flex items-center gap-4">
-                            <Button disabled={processing}>Save</Button>
+                            <Button disabled={processing}>
+                                {isEditing ? 'Atualizar' : 'Salvar'}
+                            </Button>
 
                             <Transition
                                 show={recentlySuccessful}

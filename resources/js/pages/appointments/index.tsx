@@ -1,9 +1,10 @@
-import { type BreadcrumbItem } from '@/types';
+import { Appointment, type BreadcrumbItem } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
 
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import IndexLayout from '@/layouts/appointments/index';
+import { AlertNotification } from '@/components/ui/alert-notification';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,22 +26,17 @@ type AppointmentPagination = {
     id: number;
 }
 
-type Appointment = {
-    id: number;
-    title: string;
-    description: string;
-    date_appointment: string;
-    send_notification: boolean;
-}
-
 export default function Index() {
     const { appointments } = (usePage().props as unknown) as { appointments: AppointmentPagination };
+    const { props } = usePage();
 
     return (
+        
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Meus Agendamentos" />
+                <AlertNotification success={props.success as string | undefined} error={props.error as string | undefined}/>
 
-            <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
+                <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
                     {appointments.data.length === 0 ? (
                         <p className="text-neutral-600">Nenhum agendamento encontrado.</p>
                     ) : (
@@ -62,8 +58,8 @@ export default function Index() {
                                 </div>
 
                                 <div className="mt-4 flex gap-2">
-                                    <Link href={`/appointments/${appointment.id}/edit`}>
-                                    <Button variant="outline">Editar</Button>
+                                    <Link href={`/appointments/${appointment.id}`}>
+                                        <Button variant="outline">Editar</Button>
                                     </Link>
                                 </div>
                                 </li>

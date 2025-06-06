@@ -43,3 +43,12 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Appointment {
+    id: number;
+    title: string;
+    description: string;
+    date_appointment: string;
+    date_notification: string;
+    send_notification: boolean;
+}
