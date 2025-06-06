@@ -60,7 +60,7 @@ export default function Welcome() {
                   Crie sua Tarefa
                   <Link
                     href={route('appointments.new')}
-                    className="ml-1 font-medium text-[#f53003] underline underline-offset-4 dark:text-[#FF4433]"
+                    className="ml-1 font-medium text-[#5bb4ff] underline underline-offset-4 dark:text-[#5bb4ff]"
                   >
                     aqui
                   </Link>
