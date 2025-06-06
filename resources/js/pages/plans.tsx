@@ -49,11 +49,22 @@ export default function Index() {
                                             </p>
                                         </div>
                                         <div className="mt-6">
-                                            <Link href={`/plans/details/${plan.id}`}>
-                                                <Button variant="default" className="w-full">
-                                                    {plan.value ? `R$ ${Number(plan.value).toFixed(2)} / mês` : 'Consultar'}
-                                                </Button>
-                                            </Link>
+                                            {plan.value == 0 ? (
+                                                <div className="mt-6">
+                                                    <Button
+                                                        variant="outline"
+                                                        className="w-full cursor-default pointer-events-none text-muted-foreground border-muted"
+                                                    >
+                                                        Seu plano atual
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <Link href={`/plans/details/${plan.id}`}>
+                                                    <Button variant="default" className="w-full">
+                                                        {plan.value ? `R$ ${Number(plan.value).toFixed(2)} / mês` : 'Consultar'}
+                                                    </Button>
+                                                </Link>
+                                            )}
                                         </div>
                                     </li>
                                 );

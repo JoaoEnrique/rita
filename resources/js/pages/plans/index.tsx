@@ -54,9 +54,9 @@ export default function Index() {
                                     >
                                     <div>
                                         <div className={`flex items-center gap-2 mb-4 ${plan.color}`}>
-                                                    {IconComponent && <IconComponent className="w-5 h-5" />}
-                                                    <h3 className="text-xl font-bold">{plan.name}</h3>
-                                                </div>
+                                            {IconComponent && <IconComponent className="w-5 h-5" />}
+                                            <h3 className="text-xl font-bold">{plan.name}</h3>
+                                        </div>
                                         <p className="text-sm text-neutral-700">{plan.description}</p>
                                         <p className="text-sm text-neutral-500">
                                             Preço: R$ {Number(plan.value).toFixed(2)}
