@@ -6,6 +6,7 @@ use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\RoutesController;
 
 Route::get('/', [RoutesController::class, "index"])->name('home');
+Route::get('/plans', [RoutesController::class, "plans"])->name('plans');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => 'appointments'], function () {

@@ -1,6 +1,0 @@
-@section('title', 'Rita - Criar conta')
-@extends('layouts.main')
-
-@section('content')
-    <p>This is my body content.</p>
-@endsection

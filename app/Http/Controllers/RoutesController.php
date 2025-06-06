@@ -10,6 +10,10 @@ class RoutesController extends Controller
         if(auth()->check())
             return redirect()->route("appointments.index");
         
-            return inertia()->render("welcome");
+        return inertia()->render("welcome");
+    }
+
+    public function plans(){
+        return inertia()->render("plans");
     }
 }

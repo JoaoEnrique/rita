@@ -40,7 +40,7 @@ export default function Index() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Meus Agendamentos" />
 
-            <IndexLayout>
+            <IndexLayout title='Meus Agendamentos' description='Visualize seus agendamentos'>
                     {appointments.data.length === 0 ? (
                         <p className="text-neutral-600">Nenhum agendamento encontrado.</p>
                     ) : (

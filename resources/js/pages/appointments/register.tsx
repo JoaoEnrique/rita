@@ -52,7 +52,7 @@ export default function Register() {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Agendar" />
 
-            <RegisterLayout>
+            <RegisterLayout title='Agendar' description='Cadastre um novo agendamento'>
                 <div className="space-y-6">
                     {/* <HeadingSmall title="Novo Agendamento" description="Cadastre um novo agendamento" /> */}
 
