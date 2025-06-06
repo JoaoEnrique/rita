@@ -54,6 +54,9 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'pacoca_url' => env('PACOCA_URL', 'https://pacoca.net'),
+    'readbooks_url' => env('READBOOKS_URL', 'https://pacoca.net'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
